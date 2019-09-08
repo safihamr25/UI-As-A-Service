@@ -1,0 +1,198 @@
+.table-scroll{
+	height :560px;
+	overflow-y : auto;
+	display:block;
+}
+
+.custom-card{
+	cursor:pointer;
+}
+.custom-card:not(:first-child) .card-body{
+	display:none;
+}
+
+.card-highlight{
+	border:1px solid #660033;
+}
+
+.card-header-color{
+	background-color: #660033;
+	color: white;
+}
+
+.card-header{
+	font-weight:bold;
+}
+
+.label{
+	color:#660033;
+	font-weight: bold;
+	padding: 1px;
+}
+.modal-body{
+	border: 2px solid #660033;	
+}
+.modal-header{
+	background-color: #660033;
+	color: white;
+	border: 2px solid #660033;
+}
+.navbar{
+	background-color: #660033;
+}
+
+.navbar-brand{
+	color: white;
+	font-weight:bolder;
+	font-size:25px;
+}
+.table{
+	box-shadow: grey 10px 10px 10px;
+}
+.btn-outline-violet{
+	background-color: #660033;
+	color:white;
+	font-weight:bold;
+}
+
+.btn-outline-violet:hover{
+	border: 2px solid #660033;
+	color:#660033;
+	font-weight:bold;
+	background-color:white;
+}
+.input-group-text{
+	font-weight: bold;
+}
+.mandatory{
+	color: red;
+	font-weight:bold;
+}
+.tablename{
+	font-family: serif;
+}
+.navbar{
+	box-shadow: grey 13px 13px 13px;
+}
+
+.div-hover{
+	background-color: #ffffff
+}
+
+
+.div-hover:hover{
+	background-color: #d6d6c2
+}
+
+.row1{
+	background-color: #ffffff
+}
+
+.row1:hover{
+	background-color: #00ffff
+}
+
+
+#dropdown-menu #list {
+    max-height: 0;
+    transition: max-height 0.15s ease-out;
+    overflow: hidden;
+    background: #d5d5d5;
+}
+
+#dropdown-menu:hover #list {
+    max-height: 500px;
+    transition: max-height 0.25s ease-in;
+}
+::-webkit-scrollbar {
+  width: 10px;
+  height:10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #d6d6c2; 
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #660033; 
+  border: 1px solid #660033;
+}
+
+.form-signin
+{
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+}
+.form-signin .form-signin-heading, .form-signin .checkbox
+{
+    margin-bottom: 10px;
+}
+.form-signin .checkbox
+{
+    font-weight: normal;
+}
+.form-signin .form-control
+{
+    position: relative;
+    font-size: 16px;
+    height: auto;
+    padding: 10px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.form-signin .form-control:focus
+{
+    z-index: 2;
+}
+.form-signin input[type="text"]
+{
+    margin-bottom: -1px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.form-signin input[type="password"]
+{
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+.account-wall
+{
+    margin-top: 20px;
+    padding: 40px 0px 20px 0px;
+    background-color: #f7f7f7;
+    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 4px 4px 4px rgba(0.4, 0.4, 0.4, 0.4);
+}
+.login-title
+{
+    color: #555;
+    font-size: 18px;
+    font-weight: 400;
+    display: block;
+}
+.profile-img
+{
+    width: 300px;
+    height: 180px;
+    margin: 0 auto 10px;
+    display: block;
+    -moz-border-radius: 10%;
+    -webkit-border-radius: 10%;
+    border-radius: 10%;
+}
+.need-help
+{
+    margin-top: 10px;
+}
+.new-account
+{
+    display: block;
+    margin-top: 10px;
+}

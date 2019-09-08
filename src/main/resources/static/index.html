@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<script src="scripts/jquery.min.js"></script>
+<script src="scripts/bootstrap.min.js"></script>
+<link
+	rel="stylesheet"
+	href="scripts/bootstrap.min.css">
+
+	
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="scripts/angular.min.js"></script>
+<script src="scripts/chosen.jquery.min.js"></script>
+<link
+	rel="stylesheet"
+	href="scripts/chosen.min.css">
+<link
+	rel="stylesheet"
+	href="styles/home.css">
+<body ng-style=" 'background-color': loginShow ? '#ff0000' : '#ffffff'" >
+
+ <!--  <div ng-app="myApp"
+		ng-controller="myCtrl">
+    <div class="container" ng-show="loginShow" >
+    <div class="row">
+      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <div class="card card-signin my-5">
+          <div class="card-body">
+            <h5 class="card-title text-center" style="margin-bottom: 2em;">Sign In</h5>
+            <form class="form-signin">
+              <div class="form-label-group" style="margin-bottom : 2em;">
+                <input type="text" id="inputEmail" class="form-control" placeholder="Enter Your User ID" ng-model= "userid" required autofocus> 
+              </div>
+
+              <div class="form-label-group">
+                <input type="password" id="inputPassword" class="form-control" placeholder="Password" ng-model= "password" required>
+              </div>
+              <br>
+              <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" ng-click="signIn()" >Sign in</button>
+              <hr class="my-4">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>-->
+
+    
+    
+    <div ng-app="myApp"
+		ng-controller="myCtrl">
+	<div class="d-flex" ng-show="loginShow">	
+    <div class="container m-auto"  align= "center" style="margin-top: 3em;">
+    
+        <div class="col-sm-6 col-md-4 col-md-offset-4">
+            <div class="account-wall" style="margin-top: 6em;">
+                <img class="profile-img" src="../images/logo.png"
+                    alt="">
+                <form class="form-signin">
+                <input type="text" class="form-control" ng-model= "userid" placeholder="Enter you UserID" required autofocus>
+                <br>
+                <input type="password" class="form-control" ng-model= "password" placeholder="Password" required>
+                <br>
+                <button class="btn btn-lg btn-primary btn-block" ng-click="signIn()" type="submit">
+                    Sign in</button>
+                </form>
+            </div>
+        </div>
+   
+</div>
+</div>
+	<div ng-hide="loginShow" ng-init="model = {}">
+		<div>
+            <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+                <a ng-click= "nameClick()" href="#"><span class="navbar-brand" >UI As A Service</span></a>
+                &nbsp;&nbsp;&nbsp;
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <button class="btn btn-outline-warning dropdown-toggle" href="#" ng-click="fetchEntity()" id="navbardrop" data-toggle="dropdown"> Get Entity </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item div-hover" href="#" ng-click="getEntityRecords(name)" ng-repeat="name in entityNames track by $index">{{name}}</a>
+                        </div>
+                    </li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <li class="nav-item dropdown">
+                        <button class="btn btn-outline-warning dropdown-toggle" href="#" ng-click="fetchEntity()" id="navbardrop" data-toggle="dropdown">Meta Data Maintenance</button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item div-hover" href="#" ng-click="showEntityMetaDataForm(name)" ng-repeat="name in entityNames track by $index">{{name}}</a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="p-5">
+            <div class="row">
+            <div ng-show="!entityMetaDataForm" class="col-lg-{{(showForm)?6:12}} col-sm-12">
+                   <div align= "center" style="margin-bottom : 2em;">
+	                    <h3>
+	                     <strong class="tablename">{{entityName | uppercase}}</strong>
+	                     <button
+	                        class="btn btn-outline-violet"
+	                        ng-click="getEntityMetaData(entityRecords[0].entityType)">Add</button>
+	                  </h3>
+                  </div>
+                    <div class="" >
+                        <table class="table table-hover table-responsive table-scroll table-bordered">
+                            <thead class="thead-dark">
+                                <tr>
+                                <th></th>
+                                    <th></th>
+                                    <th ng-repeat="x in entityMetaData" style="text-align : justify;" ng-if="(x.name != 'makerdt' && x.name != 'checkerdt')">{{x.label}}</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="record in entityRecords" class="row1">
+ 
+                                    <td style="border: 2.5px solid #dee2e6;">
+                                        <button class="btn btn-outline-warning" ng-click="updateRecord($index)" onclick="hightlightRow(this)"><i class='fas fa-edit'></i></i>
+                                        </button>
+                                    </td>
+                                    <td style="border: 2.5px solid #dee2e6;" >
+                                        <button class="btn btn-outline-danger" ng-click="deleteRecord(record['id'],entityName)"><i class='fas fa-trash-alt'></button></td>
+                           				<td style="border: 2.5px solid #dee2e6;"  ng-repeat="x in entityMetaData" style="text-align : justify;" ng-if="(x.name != 'makerdt' && x.name != 'checkerdt')">{{record[x.name]}}</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+                <div class="col-lg-6 col-sm-12 table-scroll" ng-show="showForm && (!entityMetaDataForm)">
+                    <form class="w-100" ng-submit="saveEntityRecord(entityName)">
+                        <div class="form-group" ng-repeat="field in entityMetaData" ng-if="field.name != 'makerdt' && field.name != 'checkerdt' && field.name != 'id' ">
+                            <div ng-show="field.webInputTag.tag == 'input'">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">{{field.label}}&nbsp;&nbsp;<span ng-if="field.mandatory" class="mandatory">*</span></div>
+                                    </div>
+                                    <input ng-if="inputFieldDataTypes.indexOf(field.type) > -1 " ng-model="model.entityData[field.name]" type="text" id="{{field.label}}" class="form-control" ng-keyup="dataValidation(field)" ng-readonly="isUpdate && field.webInputTag.readOnly" ng-required="field.mandatory">
+                                    <input ng-if="field.type == 'int'" ng-model="model.entityData[field.name]" ng-keyup="dataValidation(field)" type="number" class="form-control" id="{{field.label}}" ng-readonly="isUpdate && field.webInputTag.readOnly" ng-required="field.mandatory">
+                                    <input ng-if="field.type == 'date'" ng-model="model.entityData[field.name]" ng-keyup="dataValidation(field)" type="date" class="form-control" id="{{field.label}}" ng-readonly="isUpdate && field.webInputTag.readOnly" ng-required="field.mandatory">
+                                </div>
+                            </div>
+                            <div ng-show="field.webInputTag.tag == 'dropdown' ">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">{{field.label}}</div>
+                                    </div>
+                                    <select class="form-control" ng-model="model.entityData[field.name]" ng-blur="dataValidation(field)">
+                                        <option ng-repeat="option in field.webInputTag.options" value="{{option}}">{{option}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <span class="text-danger">{{message[field.name]}}</span>
+                        </div>
+                        <div class="d-flex">
+                        	<button type="submit" class="btn btn-outline-violet m-auto">Add Record</button>
+                    	</div>
+                    </form>
+                </div>
+                <div class="container-fluid" ng-show="entityMetaDataForm">
+                <div class="d-flex">
+                <button type="button" class="btn btn-outline-violet m-auto" data-toggle="modal" data-target="#myModal">
+    Add Field <strong>+</strong>
+    </div>
+  </button><br>
+   <!-- The Modal -->
+  <div class="modal" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Add Field to Entity Meta Data</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+          <form id="fieldForm" ng-submit="updateField()">
+  <div class="input-group mb-3" ng-repeat="(x,y) in entityMetaData[0]">
+    <div class="input-group-prepend">
+      <span class="input-group-text">{{x}}</span>
+    </div>
+    <input type="text" class="form-control" ng-model="model.newField[x]">
+  </div>
+  <div class="d-flex">
+  	<button class="btn btn-outline-violet m-auto">Add</button>
+  </div>
+</form>
+        </div>
+      </div>
+    </div>
+  </div>
+                    <form>
+                        
+                            <div class="card-columns">
+                                <div class="card custom-card-{{$index}} custom-card" ng-repeat="field in entityMetaData" ng-init="outerIndex=$index" onclick="hideAndShow(this)">
+                                    <div class="card-header">{{field.label}}</div>
+                                    <div class="card-body">
+                                        <div ng-repeat="(x,y) in field" ng-init="innerIndex = $index">
+                                        <span class="label" ng-if="x == 'name'">Column Name</span>
+                                        <br>
+                             
+                                        <span class="label" ng-if="x == 'type'">Properties</span>
+                                            <div class="input-group" ng-if="x != 'webInputTag'">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text">{{x}}</div>
+                                                </div>
+                                                <input type="text" id="{{field.label}}" class="form-control" ng-model="entityMetaData[outerIndex][x]">
+                                            </div>
+                                            <br>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <div class="d-flex">
+                        <button type="submit" class="btn btn-outline-violet m-auto" ng-click="updateEntityMetaData()">UPDATE</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+         </div>
+         <!-- <p>Value: {{model.entityData}}</p>
+            <h2>{{$parent.entityData}}</h2>
+            <p ng-repeat="name in entityRecords">{{name}}</p>
+            <p ng-repeat="field in entityMetadata[0].fields">{{field.datatype}}</p> -->
+      </div>
+	
+	</div>
+</body>
+<script src="js/app.js"></script>
+</html>
